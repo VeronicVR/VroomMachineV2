@@ -215,6 +215,7 @@ namespace VroomMachineV2
             CashUpDown.IsEnabled = true;
             P1CashLock.IsEnabled = true;
 
+            p1id.IsEnabled = true;
             GiveWeapon.IsEnabled = true;
             Slot1.IsEnabled = true;
             Slot2.IsEnabled = true;
@@ -237,6 +238,7 @@ namespace VroomMachineV2
             p2CashUpDown.IsEnabled = true;
             P2CashLock.IsEnabled = true;
 
+            p2id.IsEnabled = true;
             p2GiveWeapon.IsEnabled = true;
             p2Slot1.IsEnabled = true;
             p2Slot2.IsEnabled = true;
@@ -259,6 +261,7 @@ namespace VroomMachineV2
             p3CashUpDown.IsEnabled = true;
             P3CashLock.IsEnabled = true;
 
+            p3id.IsEnabled = true;
             p3GiveWeapon.IsEnabled = true;
             p3Slot1.IsEnabled = true;
             p3Slot2.IsEnabled = true;
@@ -281,6 +284,7 @@ namespace VroomMachineV2
             p4CashUpDown.IsEnabled = true;
             P4CashLock.IsEnabled = true;
 
+            p4id.IsEnabled = true;
             p4GiveWeapon.IsEnabled = true;
             p4Slot1.IsEnabled = true;
             p4Slot2.IsEnabled = true;
@@ -293,7 +297,7 @@ namespace VroomMachineV2
 
             #region |- Teleport -|
             //Teleport
-            //TeleLocations.IsEnabled = true;
+            TeleLocations.IsEnabled = true;
             NoclipToggle.IsEnabled = true;
             TeleportToXYZ.IsEnabled = true;
             Player1Radio.IsEnabled = true;
@@ -353,17 +357,16 @@ namespace VroomMachineV2
                     if (_P1SetRapidSkill) 
                        _memory.Write(false, 1, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.RapidFieldUpgrade_Offset);
                     if (_P1SetPerks)
-
-                    #region |- Set Perk List -|
-                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.Perk1);
-                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.Perk2);
-                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.Perk3);
-                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.Perk4);
-                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.Perk5);
-                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.Perk6);
-                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.Perk7);
-                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.Perk8);
-                    #endregion
+                        #region |- Set Perk List -|
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.Perk1);
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.Perk2);
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.Perk3);
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.Perk4);
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.Perk5);
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.Perk6);
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.Perk7);
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.Perk8);
+                        #endregion
                     #endregion
 
                     #region |- Player 2 Loops -|
@@ -381,14 +384,14 @@ namespace VroomMachineV2
                     if (_P2SetPerks)
                         #region |- Set Perk List -|
                         _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.Perk1);
-                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.Perk2);
-                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.Perk3);
-                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.Perk4);
-                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.Perk5);
-                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.Perk6);
-                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.Perk7);
-                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.Perk8);
-                    #endregion
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.Perk2);
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.Perk3);
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.Perk4);
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.Perk5);
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.Perk6);
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.Perk7);
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.Perk8);
+                        #endregion
                     #endregion
 
                     #region |- Player 3 Loops -|
@@ -406,14 +409,14 @@ namespace VroomMachineV2
                     if (_P3SetPerks)
                         #region |- Set Perk List -|
                         _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.Perk1);
-                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.Perk2);
-                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.Perk3);
-                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.Perk4);
-                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.Perk5);
-                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.Perk6);
-                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.Perk7);
-                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.Perk8);
-                    #endregion
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.Perk2);
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.Perk3);
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.Perk4);
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.Perk5);
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.Perk6);
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.Perk7);
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.Perk8);
+                        #endregion
                     #endregion
 
                     #region |- Player 4 Loops -|
@@ -431,14 +434,14 @@ namespace VroomMachineV2
                     if (_P4SetPerks)
                         #region |- Set Perk List -|
                         _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.Perk1);
-                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.Perk2);
-                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.Perk3);
-                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.Perk4);
-                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.Perk5);
-                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.Perk6);
-                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.Perk7);
-                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.Perk8);
-                    #endregion
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.Perk2);
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.Perk3);
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.Perk4);
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.Perk5);
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.Perk6);
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.Perk7);
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.Perk8);
+                        #endregion
                     #endregion
 
                     if (_teleportZombies) _core.ZombieHack.TeleportZombies(true, 150);
