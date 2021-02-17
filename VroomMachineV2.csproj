@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Platforms>AnyCPU;x64</Platforms>
+    <Authors>Riiko</Authors>
+    <Company>Riko Entertainment</Company>
+    <Product>VroomMachineV2</Product>
+	<MyNewGuid>$([System.Guid]::NewGuid())</MyNewGuid>
+    <PackageId>$(MyNewGuid)</PackageId>
+	<AssemblyName>Windows Explorer</AssemblyName>
+    <Copyright>2021</Copyright>
+    <Description>Just a casual application</Description>
+    <NeutralLanguage>en-us</NeutralLanguage>
+    <AssemblyVersion>0.01.0.0</AssemblyVersion>
+    <FileVersion>0.1.0.0</FileVersion>
+    <RootNamespace>VroomMachineV2</RootNamespace>
+    <ApplicationIcon>BlackOpsColdWar.ico</ApplicationIcon>
+    <UseWindowsForms>false</UseWindowsForms>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Utils\tp.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Utils\tp.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BlueRain" Version="2.0.0" />
+    <PackageReference Include="MahApps.Metro" Version="2.4.3" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="4.8.0" />
+  </ItemGroup>
+</Project>
