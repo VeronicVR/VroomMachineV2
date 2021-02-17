@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using BlueRain;
 using System.Diagnostics;
 using System.Collections.Generic;
@@ -161,7 +161,7 @@ namespace VroomMachineV2
             {
                 _baseAddress = (IntPtr)WinAPI.GetBaseAddress("BlackOpsColdWar").ToInt64();
             }
-            WinAPI m = new WinAPI(); 
+            WinAPI m = new WinAPI();
         }
 
         private void Launch(object sender, RoutedEventArgs e)
@@ -345,96 +345,101 @@ namespace VroomMachineV2
                     if (_P1SetAmmo) for (int i = 1; i < 6; i++) { _memory.Write(false, 30, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.Ammo + (i * 0x4)); }
                     if (_P1SetNoTarget) _memory.Write<int>(true, 0, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerPedPtr.Health);
                     if (_P1SetRapidFire)
-                        if (KeyUtils.GetKeyDown(0x1))
+                        if (Utils.KeyUtils.GetKeyDown(0x1))
                         {
-                            _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr) Offsets.PlayerCompPtr.RapidFire1);
-                            _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr) Offsets.PlayerCompPtr.RapidFire2);
+                            _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.RapidFire1);
+                            _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.RapidFire2);
                         };
-                    if (_P1SetRapidSkill) ;
+                    if (_P1SetRapidSkill) 
+                       _memory.Write(false, 1, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.RapidFieldUpgrade_Offset);
                     if (_P1SetPerks)
-                        #region |- Set Perk List -|
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr) Offsets.PlayerCompPtr.Perk1);
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr) Offsets.PlayerCompPtr.Perk2);
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr) Offsets.PlayerCompPtr.Perk3);
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr) Offsets.PlayerCompPtr.Perk4);
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr) Offsets.PlayerCompPtr.Perk5);
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr) Offsets.PlayerCompPtr.Perk6);
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr) Offsets.PlayerCompPtr.Perk7);
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr) Offsets.PlayerCompPtr.Perk8);
-                        #endregion
-                    #endregion 
+
+                    #region |- Set Perk List -|
+                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.Perk1);
+                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.Perk2);
+                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.Perk3);
+                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.Perk4);
+                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.Perk5);
+                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.Perk6);
+                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.Perk7);
+                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.Perk8);
+                    #endregion
+                    #endregion
 
                     #region |- Player 2 Loops -|
-                    if (_P2FreezeMoney) _memory.Write<int>(true, (int)CashUpDown.Value, _baseAddress + Offsets.PlayerBase + Offsets.ArraySizeOffset , (IntPtr)Offsets.PlayerCompPtr.Points);
-                    if (_P2SetAmmo) for (int i = 1; i < 6; i++) { _memory.Write(false, 30, _baseAddress + Offsets.PlayerBase + Offsets.ArraySizeOffset , (IntPtr)Offsets.PlayerCompPtr.Ammo + (i * 0x4)); }
-                    if (_P2SetNoTarget) _memory.Write<int>(true, 0, _baseAddress + Offsets.PlayerBase + Offsets.ArraySizeOffset , (IntPtr)Offsets.PlayerPedPtr.Health);
+                    if (_P2FreezeMoney) _memory.Write<int>(true, (int)CashUpDown.Value, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.Points);
+                    if (_P2SetAmmo) for (int i = 1; i < 6; i++) { _memory.Write(false, 30, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.Ammo + (i * 0x4)); }
+                    if (_P2SetNoTarget) _memory.Write<int>(true, 0, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerPedPtr.Health);
                     if (_P2SetRapidFire)
-                        if (KeyUtils.GetKeyDown(0x1))
+                        if (Utils.KeyUtils.GetKeyDown(0x1))
                         {
-                            _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.ArraySizeOffset , (IntPtr) Offsets.PlayerCompPtr.RapidFire1);
-                            _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.ArraySizeOffset , (IntPtr) Offsets.PlayerCompPtr.RapidFire2);
+                            _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.RapidFire1);
+                            _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.RapidFire2);
                         };
-                    if (_P2SetRapidSkill) ;
+                    if (_P2SetRapidSkill)
+                        _memory.Write(false, 1, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.RapidFieldUpgrade_Offset);
                     if (_P2SetPerks)
                         #region |- Set Perk List -|
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.ArraySizeOffset , (IntPtr) Offsets.PlayerCompPtr.Perk1);
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.ArraySizeOffset , (IntPtr) Offsets.PlayerCompPtr.Perk2);
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.ArraySizeOffset , (IntPtr) Offsets.PlayerCompPtr.Perk3);
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.ArraySizeOffset , (IntPtr) Offsets.PlayerCompPtr.Perk4);
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.ArraySizeOffset , (IntPtr) Offsets.PlayerCompPtr.Perk5);
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.ArraySizeOffset , (IntPtr) Offsets.PlayerCompPtr.Perk6);
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.ArraySizeOffset , (IntPtr) Offsets.PlayerCompPtr.Perk7);
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.ArraySizeOffset , (IntPtr) Offsets.PlayerCompPtr.Perk8);
-                        #endregion
-                    #endregion 
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.Perk1);
+                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.Perk2);
+                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.Perk3);
+                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.Perk4);
+                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.Perk5);
+                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.Perk6);
+                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.Perk7);
+                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.Perk8);
+                    #endregion
+                    #endregion
 
                     #region |- Player 3 Loops -|
-                    if (_P3FreezeMoney) _memory.Write<int>(true, (int)CashUpDown.Value, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 2 ) , (IntPtr)Offsets.PlayerCompPtr.Points);
-                    if (_P3SetAmmo) for (int i = 1; i < 6; i++) { _memory.Write(false, 30, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 2 ) , (IntPtr)Offsets.PlayerCompPtr.Ammo + (i * 0x4)); }
-                    if (_P3SetNoTarget) _memory.Write<int>(true, 0, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset *2 ) , (IntPtr)Offsets.PlayerPedPtr.Health);
+                    if (_P3FreezeMoney) _memory.Write<int>(true, (int)CashUpDown.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.Points);
+                    if (_P3SetAmmo) for (int i = 1; i < 6; i++) { _memory.Write(false, 30, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.Ammo + (i * 0x4)); }
+                    if (_P3SetNoTarget) _memory.Write<int>(true, 0, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerPedPtr.Health);
                     if (_P3SetRapidFire)
-                        if (KeyUtils.GetKeyDown(0x1))
+                        if (Utils.KeyUtils.GetKeyDown(0x1))
                         {
-                            _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 2 ) , (IntPtr) Offsets.PlayerCompPtr.RapidFire1);
-                            _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase +( Offsets.ArraySizeOffset * 2 ) , (IntPtr) Offsets.PlayerCompPtr.RapidFire2);
+                            _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.RapidFire1);
+                            _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.RapidFire2);
                         };
-                    if (_P3SetRapidSkill) ;
+                    if (_P3SetRapidSkill)
+                        _memory.Write(false, 1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.RapidFieldUpgrade_Offset);
                     if (_P3SetPerks)
                         #region |- Set Perk List -|
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 2 ) , (IntPtr) Offsets.PlayerCompPtr.Perk1);
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 2 ) , (IntPtr) Offsets.PlayerCompPtr.Perk2);
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 2 ) , (IntPtr) Offsets.PlayerCompPtr.Perk3);
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 2 ) , (IntPtr) Offsets.PlayerCompPtr.Perk4);
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 2 ) , (IntPtr) Offsets.PlayerCompPtr.Perk5);
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 2 ) , (IntPtr) Offsets.PlayerCompPtr.Perk6);
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 2 ) , (IntPtr) Offsets.PlayerCompPtr.Perk7);
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 2 ) , (IntPtr) Offsets.PlayerCompPtr.Perk8);
-                        #endregion
-                    #endregion 
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.Perk1);
+                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.Perk2);
+                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.Perk3);
+                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.Perk4);
+                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.Perk5);
+                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.Perk6);
+                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.Perk7);
+                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.Perk8);
+                    #endregion
+                    #endregion
 
                     #region |- Player 4 Loops -|
-                    if (_P4FreezeMoney) _memory.Write<int>(true, (int)CashUpDown.Value, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 3 ) , (IntPtr)Offsets.PlayerCompPtr.Points);
-                    if (_P4SetAmmo) for (int i = 1; i < 6; i++) { _memory.Write(false, 30, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 3 ) , (IntPtr)Offsets.PlayerCompPtr.Ammo + (i * 0x4)); }
-                    if (_P4SetNoTarget) _memory.Write<int>(true, 0, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 3 ) , (IntPtr)Offsets.PlayerPedPtr.Health);
+                    if (_P4FreezeMoney) _memory.Write<int>(true, (int)CashUpDown.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.Points);
+                    if (_P4SetAmmo) for (int i = 1; i < 6; i++) { _memory.Write(false, 30, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.Ammo + (i * 0x4)); }
+                    if (_P4SetNoTarget) _memory.Write<int>(true, 0, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerPedPtr.Health);
                     if (_P4SetRapidFire)
-                        if (KeyUtils.GetKeyDown(0x1))
+                        if (Utils.KeyUtils.GetKeyDown(0x1))
                         {
-                            _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 3 ) , (IntPtr) Offsets.PlayerCompPtr.RapidFire1);
-                            _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase +( Offsets.ArraySizeOffset * 3 ) , (IntPtr) Offsets.PlayerCompPtr.RapidFire2);
+                            _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.RapidFire1);
+                            _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.RapidFire2);
                         };
-                    if (_P4SetRapidSkill) ;
+                    if (_P4SetRapidSkill)
+                        _memory.Write(false, 1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.RapidFieldUpgrade_Offset);
                     if (_P4SetPerks)
                         #region |- Set Perk List -|
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 3 ) , (IntPtr) Offsets.PlayerCompPtr.Perk1);
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 3 ) , (IntPtr) Offsets.PlayerCompPtr.Perk2);
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 3 ) , (IntPtr) Offsets.PlayerCompPtr.Perk3);
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 3 ) , (IntPtr) Offsets.PlayerCompPtr.Perk4);
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 3 ) , (IntPtr) Offsets.PlayerCompPtr.Perk5);
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 3 ) , (IntPtr) Offsets.PlayerCompPtr.Perk6);
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 3 ) , (IntPtr) Offsets.PlayerCompPtr.Perk7);
-                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 3 ) , (IntPtr) Offsets.PlayerCompPtr.Perk8);
-                        #endregion
-                    #endregion 
+                        _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.Perk1);
+                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.Perk2);
+                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.Perk3);
+                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.Perk4);
+                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.Perk5);
+                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.Perk6);
+                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.Perk7);
+                    _memory.Write(false, -1, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.Perk8);
+                    #endregion
+                    #endregion
 
                     if (_teleportZombies) _core.ZombieHack.TeleportZombies(true, 150);
                     if (_teleportZombiesLocation) _core.ZombieHack.TeleportZombies(false);
@@ -453,7 +458,8 @@ namespace VroomMachineV2
             }
         }
         private void TimerEnable(object sender, RoutedEventArgs e)
-        { _console.WriteLine("Timer Enabled", Brushes.Green);
+        {
+            _console.WriteLine("Timer Enabled", Brushes.Green);
 
         }
 
@@ -494,12 +500,12 @@ namespace VroomMachineV2
 
         #region |- Player 4 Bool List -|
 
-        private bool _P3FreezeMoney;
-        private bool _P3SetAmmo;
-        private bool _P3SetNoTarget;
-        private bool _P3SetRapidFire;
-        private bool _P3SetRapidSkill;
-        private bool _P3SetPerks;
+        private bool _P4FreezeMoney;
+        private bool _P4SetAmmo;
+        private bool _P4SetNoTarget;
+        private bool _P4SetRapidFire;
+        private bool _P4SetRapidSkill;
+        private bool _P4SetPerks;
 
         #endregion
 
@@ -557,9 +563,9 @@ namespace VroomMachineV2
             if (P1RapidFire.IsChecked == true)
             { _P1SetRapidSkill = true; }
             else
-            { _P1SetRapidSkill = false; }
+            { _P1SetRapidSkill = false; _memory.Write(false, 0, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.RapidFieldUpgrade_Offset); }
         }
-         private void SetP1Perks(object sender, RoutedEventArgs e)
+        private void SetP1Perks(object sender, RoutedEventArgs e)
         {
             if (P1RapidFire.IsChecked == true)
             { _P1SetPerks = true; }
@@ -570,17 +576,17 @@ namespace VroomMachineV2
         {
             #region |- Set Weapon Slots -|
             if (Slot1.IsChecked == true)
-            { _memory.Write<int>(false, id, _baseAddress + Offsets.PlayerBase, (IntPtr) Offsets.PlayerCompPtr.SetWeaponID); } // + 0x40 for each weapon
+            { _memory.Write<int>(false, (int)p1id.Value, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID); } // + 0x40 for each weapon
             else if (Slot2.IsChecked == true)
-            { _memory.Write<int>(false, id, _baseAddress + Offsets.PlayerBase, (IntPtr) Offsets.PlayerCompPtr.SetWeaponID + 0x40); }
+            { _memory.Write<int>(false, (int)p1id.Value, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x40); }
             else if (Slot3.IsChecked == true)
-            { _memory.Write<int>(false, id, _baseAddress + Offsets.PlayerBase, (IntPtr) Offsets.PlayerCompPtr.SetWeaponID + 0x80); }
+            { _memory.Write<int>(false, (int)p1id.Value, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x80); }
             else if (Slot4.IsChecked == true)
-            { _memory.Write<int>(false, id, _baseAddress + Offsets.PlayerBase, (IntPtr) Offsets.PlayerCompPtr.SetWeaponID + 0xC0); }
+            { _memory.Write<int>(false, (int)p1id.Value, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0xC0); }
             else if (Slot5.IsChecked == true)
-            { _memory.Write<int>(false, id, _baseAddress + Offsets.PlayerBase, (IntPtr) Offsets.PlayerCompPtr.SetWeaponID + 0x100); }
+            { _memory.Write<int>(false, (int)p1id.Value, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x100); }
             else if (Slot6.IsChecked == true)
-            { _memory.Write<int>(false, id, _baseAddress + Offsets.PlayerBase, (IntPtr) Offsets.PlayerCompPtr.SetWeaponID + 0x140); }
+            { _memory.Write<int>(false, (int)p1id.Value, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x140); }
             #endregion
         }
         #endregion
@@ -590,12 +596,12 @@ namespace VroomMachineV2
         private void SetP2GodMode(object sender, RoutedEventArgs e)
         {
             if (P2GodMode.IsChecked == true)
-            { _memory.Write<byte>(false, 0xA0, _baseAddress + Offsets.PlayerBase + Offsets.ArraySizeOffset , (IntPtr)Offsets.PlayerCompPtr.GodMode); }
+            { _memory.Write<byte>(false, 0xA0, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.GodMode); }
             else
-            { _memory.Write<byte>(false, 0x20, _baseAddress + Offsets.PlayerBase + Offsets.ArraySizeOffset , (IntPtr)Offsets.PlayerCompPtr.GodMode); }
+            { _memory.Write<byte>(false, 0x20, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.GodMode); }
         }
         private void SetP2Money(object sender, RoutedEventArgs e)
-        { _memory.Write<Int64>(false, (int)CashUpDown.Value, _baseAddress + Offsets.PlayerBase + Offsets.ArraySizeOffset , (IntPtr)Offsets.PlayerCompPtr.GodMode); }
+        { _memory.Write<Int64>(false, (int)CashUpDown.Value, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.GodMode); }
         private void FreezeP2Money(object sender, RoutedEventArgs e)
         {
             if (P2CashLock.IsChecked == true)
@@ -629,9 +635,9 @@ namespace VroomMachineV2
             if (P2RapidFire.IsChecked == true)
             { _P2SetRapidSkill = true; }
             else
-            { _P2SetRapidSkill = false; }
+            { _P2SetRapidSkill = false; _memory.Write(false, 0, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.RapidFieldUpgrade_Offset); }
         }
-         private void SetP2Perks(object sender, RoutedEventArgs e)
+        private void SetP2Perks(object sender, RoutedEventArgs e)
         {
             if (P2RapidFire.IsChecked == true)
             { _P2SetPerks = true; }
@@ -642,17 +648,17 @@ namespace VroomMachineV2
         {
             #region |- Set Weapon Slots -|
             if (p2Slot1.IsChecked == true)
-            { _memory.Write<int>(false, id, _baseAddress + Offsets.PlayerBase + Offsets.ArraySizeOffset , (IntPtr) Offsets.PlayerCompPtr.SetWeaponID); } // + 0x40 for each weapon
+            { _memory.Write<int>(false, (int)p2id.Value, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID); } // + 0x40 for each weapon
             else if (p2Slot2.IsChecked == true)
-            { _memory.Write<int>(false, id, _baseAddress + Offsets.PlayerBase + Offsets.ArraySizeOffset , (IntPtr) Offsets.PlayerCompPtr.SetWeaponID + 0x40); }
+            { _memory.Write<int>(false, (int)p2id.Value, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x40); }
             else if (p2Slot3.IsChecked == true)
-            { _memory.Write<int>(false, id, _baseAddress + Offsets.PlayerBase + Offsets.ArraySizeOffset , (IntPtr) Offsets.PlayerCompPtr.SetWeaponID + 0x80); }
+            { _memory.Write<int>(false, (int)p2id.Value, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x80); }
             else if (p2Slot4.IsChecked == true)
-            { _memory.Write<int>(false, id, _baseAddress + Offsets.PlayerBase + Offsets.ArraySizeOffset , (IntPtr) Offsets.PlayerCompPtr.SetWeaponID + 0xC0); }
+            { _memory.Write<int>(false, (int)p2id.Value, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0xC0); }
             else if (p2Slot5.IsChecked == true)
-            { _memory.Write<int>(false, id, _baseAddress + Offsets.PlayerBase + Offsets.ArraySizeOffset , (IntPtr) Offsets.PlayerCompPtr.SetWeaponID + 0x100); }
+            { _memory.Write<int>(false, (int)p2id.Value, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x100); }
             else if (p2Slot6.IsChecked == true)
-            { _memory.Write<int>(false, id, _baseAddress + Offsets.PlayerBase + Offsets.ArraySizeOffset , (IntPtr) Offsets.PlayerCompPtr.SetWeaponID + 0x140); }
+            { _memory.Write<int>(false, (int)p2id.Value, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x140); }
             #endregion
         }
         #endregion
@@ -662,12 +668,12 @@ namespace VroomMachineV2
         private void SetP3GodMode(object sender, RoutedEventArgs e)
         {
             if (P3GodMode.IsChecked == true)
-            { _memory.Write<byte>(false, 0xA0, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 2 ) , (IntPtr)Offsets.PlayerCompPtr.GodMode); }
+            { _memory.Write<byte>(false, 0xA0, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.GodMode); }
             else
-            { _memory.Write<byte>(false, 0x20, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 2 ) , (IntPtr)Offsets.PlayerCompPtr.GodMode); }
+            { _memory.Write<byte>(false, 0x20, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.GodMode); }
         }
         private void SetP3Money(object sender, RoutedEventArgs e)
-        { _memory.Write<Int64>(false, (int)CashUpDown.Value, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 2 ) , (IntPtr)Offsets.PlayerCompPtr.GodMode); }
+        { _memory.Write<Int64>(false, (int)CashUpDown.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.GodMode); }
         private void FreezeP3Money(object sender, RoutedEventArgs e)
         {
             if (P3CashLock.IsChecked == true)
@@ -701,9 +707,9 @@ namespace VroomMachineV2
             if (P3RapidFire.IsChecked == true)
             { _P3SetRapidSkill = true; }
             else
-            { _P3SetRapidSkill = false; }
+            { _P3SetRapidSkill = false; _memory.Write(false, 0, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.RapidFieldUpgrade_Offset); }
         }
-         private void SetP3Perks(object sender, RoutedEventArgs e)
+        private void SetP3Perks(object sender, RoutedEventArgs e)
         {
             if (P3RapidFire.IsChecked == true)
             { _P3SetPerks = true; }
@@ -714,17 +720,17 @@ namespace VroomMachineV2
         {
             #region |- Set Weapon Slots -|
             if (p3Slot1.IsChecked == true)
-            { _memory.Write<int>(false, id, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 2 ) , (IntPtr) Offsets.PlayerCompPtr.SetWeaponID); } // + 0x40 for each weapon
+            { _memory.Write<int>(false, (int)p3id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID); } // + 0x40 for each weapon
             else if (p3Slot2.IsChecked == true)
-            { _memory.Write<int>(false, id, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 2 ) , (IntPtr) Offsets.PlayerCompPtr.SetWeaponID + 0x40); }
+            { _memory.Write<int>(false, (int)p3id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x40); }
             else if (p3Slot3.IsChecked == true)
-            { _memory.Write<int>(false, id, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 2 ) , (IntPtr) Offsets.PlayerCompPtr.SetWeaponID + 0x80); }
+            { _memory.Write<int>(false, (int)p3id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x80); }
             else if (p3Slot4.IsChecked == true)
-            { _memory.Write<int>(false, id, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 2 ) , (IntPtr) Offsets.PlayerCompPtr.SetWeaponID + 0xC0); }
+            { _memory.Write<int>(false, (int)p3id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0xC0); }
             else if (p3Slot5.IsChecked == true)
-            { _memory.Write<int>(false, id, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 2 ) , (IntPtr) Offsets.PlayerCompPtr.SetWeaponID + 0x100); }
+            { _memory.Write<int>(false, (int)p3id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x100); }
             else if (p3Slot6.IsChecked == true)
-            { _memory.Write<int>(false, id, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 2 ) , (IntPtr) Offsets.PlayerCompPtr.SetWeaponID + 0x140); }
+            { _memory.Write<int>(false, (int)p3id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x140); }
             #endregion
         }
         #endregion
@@ -734,12 +740,12 @@ namespace VroomMachineV2
         private void SetP4GodMode(object sender, RoutedEventArgs e)
         {
             if (P4GodMode.IsChecked == true)
-            { _memory.Write<byte>(false, 0xA0, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 3 ) , (IntPtr)Offsets.PlayerCompPtr.GodMode); }
+            { _memory.Write<byte>(false, 0xA0, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.GodMode); }
             else
-            { _memory.Write<byte>(false, 0x20, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 3 ) , (IntPtr)Offsets.PlayerCompPtr.GodMode); }
+            { _memory.Write<byte>(false, 0x20, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.GodMode); }
         }
         private void SetP4Money(object sender, RoutedEventArgs e)
-        { _memory.Write<Int64>(false, (int)CashUpDown.Value, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 3 ) , (IntPtr)Offsets.PlayerCompPtr.GodMode); }
+        { _memory.Write<Int64>(false, (int)CashUpDown.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.GodMode); }
         private void FreezeP4Money(object sender, RoutedEventArgs e)
         {
             if (P4CashLock.IsChecked == true)
@@ -773,9 +779,9 @@ namespace VroomMachineV2
             if (P4RapidFire.IsChecked == true)
             { _P4SetRapidSkill = true; }
             else
-            { _P4SetRapidSkill = false; }
+            { _P4SetRapidSkill = false; _memory.Write(false, 0, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.RapidFieldUpgrade_Offset); }
         }
-         private void SetP4Perks(object sender, RoutedEventArgs e)
+        private void SetP4Perks(object sender, RoutedEventArgs e)
         {
             if (P4RapidFire.IsChecked == true)
             { _P4SetPerks = true; }
@@ -786,17 +792,17 @@ namespace VroomMachineV2
         {
             #region |- Set Weapon Slots -|
             if (p4Slot1.IsChecked == true)
-            { _memory.Write<int>(false, id, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 3 ) , (IntPtr) Offsets.PlayerCompPtr.SetWeaponID); } // + 0x40 for each weapon
+            { _memory.Write<int>(false, (int)p4id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID); } // + 0x40 for each weapon
             else if (p4Slot2.IsChecked == true)
-            { _memory.Write<int>(false, id, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 3 ) , (IntPtr) Offsets.PlayerCompPtr.SetWeaponID + 0x40); }
+            { _memory.Write<int>(false, (int)p4id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x40); }
             else if (p4Slot3.IsChecked == true)
-            { _memory.Write<int>(false, id, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 3 ) , (IntPtr) Offsets.PlayerCompPtr.SetWeaponID + 0x80); }
+            { _memory.Write<int>(false, (int)p4id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x80); }
             else if (p4Slot4.IsChecked == true)
-            { _memory.Write<int>(false, id, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 3 ) , (IntPtr) Offsets.PlayerCompPtr.SetWeaponID + 0xC0); }
+            { _memory.Write<int>(false, (int)p4id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0xC0); }
             else if (p4Slot5.IsChecked == true)
-            { _memory.Write<int>(false, id, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 3 ) , (IntPtr) Offsets.PlayerCompPtr.SetWeaponID + 0x100); }
+            { _memory.Write<int>(false, (int)p4id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x100); }
             else if (p4Slot6.IsChecked == true)
-            { _memory.Write<int>(false, id, _baseAddress + Offsets.PlayerBase + ( Offsets.ArraySizeOffset * 3 ) , (IntPtr) Offsets.PlayerCompPtr.SetWeaponID + 0x140); }
+            { _memory.Write<int>(false, (int)p4id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x140); }
             #endregion
         }
         #endregion
@@ -816,9 +822,9 @@ namespace VroomMachineV2
             _teleportZombies = false;
         }
 
-        
 
-        
+
+
         private void SetPosition(object sender, RoutedEventArgs e)
         {
             Vector3 position = _core.ZombieHack.SetPosition();
@@ -860,7 +866,7 @@ namespace VroomMachineV2
             _console.WriteLine("One Shot Gold Disabled", Brushes.Red);
             _oneShotKill = false;
         }
-        
+
         private void XValCopy(object sender, RoutedEventArgs e)
         { Clipboard.SetText((string)Xvaldisplay.Content); }
         private void YValCopy(object sender, RoutedEventArgs e)
