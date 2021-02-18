@@ -153,7 +153,7 @@ namespace VroomMachineV2
         #endregion
 
         private void ConClear(object sender, RoutedEventArgs e)
-        { _console.Clear(); ConsoleBox.Text = "Call of Duty: Black Ops Cold War Trainer | Version 1.0.0 | By Riko | LOADED!"; }
+        { _console.Clear(); ConsoleBox.Text = "By Riko | LOADED!"; }
 
         class address
         {
@@ -444,8 +444,10 @@ namespace VroomMachineV2
                         #endregion
                     #endregion
 
-                    if (_teleportZombies) _core.ZombieHack.TeleportZombies(true, 150);
-                    if (_teleportZombiesLocation) _core.ZombieHack.TeleportZombies(false);
+                    if (_teleportZombies) 
+                        TeleportZombies(true, 150); //Sends zombies to crosshairs
+                    if (_teleportZombiesLocation)
+                        TeleportZombies(false); //Teleports zombies inside player
 
 
                     //Set labels and enables here
@@ -468,356 +470,487 @@ namespace VroomMachineV2
 
         #region |- Private Bool List -|
 
-        #region |- Host Bool List -|
+            #region |- Host Bool List -|
 
-        private bool _P1FreezeMoney;
-        private bool _P1SetAmmo;
-        private bool _P1SetNoTarget;
-        private bool _P1SetRapidFire;
-        private bool _P1SetRapidSkill;
-        private bool _P1SetPerks;
+            private bool _P1FreezeMoney;
+            private bool _P1SetAmmo;
+            private bool _P1SetNoTarget;
+            private bool _P1SetRapidFire;
+            private bool _P1SetRapidSkill;
+            private bool _P1SetPerks;
 
-        #endregion
-
-        #region |- Player 2 Bool List -|
-
-        private bool _P2FreezeMoney;
-        private bool _P2SetAmmo;
-        private bool _P2SetNoTarget;
-        private bool _P2SetRapidFire;
-        private bool _P2SetRapidSkill;
-        private bool _P2SetPerks;
-
-        #endregion
-
-        #region |- Player 3 Bool List -|
-
-        private bool _P3FreezeMoney;
-        private bool _P3SetAmmo;
-        private bool _P3SetNoTarget;
-        private bool _P3SetRapidFire;
-        private bool _P3SetRapidSkill;
-        private bool _P3SetPerks;
-
-        #endregion
-
-        #region |- Player 4 Bool List -|
-
-        private bool _P4FreezeMoney;
-        private bool _P4SetAmmo;
-        private bool _P4SetNoTarget;
-        private bool _P4SetRapidFire;
-        private bool _P4SetRapidSkill;
-        private bool _P4SetPerks;
-
-        #endregion
-
-
-        private bool _instantKill;
-        private bool _teleportZombies;
-        private bool _rapidFire;
-        private bool _teleportZombiesLocation;
-        private bool _allPerks;
-        private bool _oneShotKill;
-
-        #endregion
-
-        #region |- Set HOST Player 1 -|
-        //Player 1 HOST
-        private void SetP1GodMode(object sender, RoutedEventArgs e)
-        {
-            if (P1GodMode.IsChecked == true)
-            { _memory.Write<byte>(false, 0xA0, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.GodMode); }
-            else
-            { _memory.Write<byte>(false, 0x20, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.GodMode); }
-        }
-        private void SetP1Money(object sender, RoutedEventArgs e)
-        { _memory.Write<Int64>(false, (int)CashUpDown.Value, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.GodMode); }
-        private void FreezeP1Money(object sender, RoutedEventArgs e)
-        {
-            if (P1CashLock.IsChecked == true)
-            { _P1FreezeMoney = true; }
-            else
-            { _P1FreezeMoney = false; }
-        }
-        private void SetP1Ammo(object sender, RoutedEventArgs e)
-        {
-            if (P1Ammo.IsChecked == true)
-            { _P1SetAmmo = true; }
-            else
-            { _P1SetAmmo = false; }
-        }
-        private void SetP1NoTarget(object sender, RoutedEventArgs e)
-        {
-            if (P1NoTarget.IsChecked == true)
-            { _P1SetNoTarget = true; }
-            else
-            { _P1SetNoTarget = false; }
-        }
-        private void SetP1RapidFire(object sender, RoutedEventArgs e)
-        {
-            if (P1RapidFire.IsChecked == true)
-            { _P1SetRapidFire = true; }
-            else
-            { _P1SetRapidFire = false; }
-        }
-        private void SetP1RapidSkill(object sender, RoutedEventArgs e)
-        {
-            if (P1RapidFire.IsChecked == true)
-            { _P1SetRapidSkill = true; }
-            else
-            { _P1SetRapidSkill = false; _memory.Write(false, 0, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.RapidFieldUpgrade_Offset); }
-        }
-        private void SetP1Perks(object sender, RoutedEventArgs e)
-        {
-            if (P1RapidFire.IsChecked == true)
-            { _P1SetPerks = true; }
-            else
-            { _P1SetPerks = false; }
-        }
-        private void SetP1WeaponSlot(object sender, RoutedEventArgs e)
-        {
-            #region |- Set Weapon Slots -|
-            if (Slot1.IsChecked == true)
-            { _memory.Write<int>(false, (int)p1id.Value, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID); } // + 0x40 for each weapon
-            else if (Slot2.IsChecked == true)
-            { _memory.Write<int>(false, (int)p1id.Value, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x40); }
-            else if (Slot3.IsChecked == true)
-            { _memory.Write<int>(false, (int)p1id.Value, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x80); }
-            else if (Slot4.IsChecked == true)
-            { _memory.Write<int>(false, (int)p1id.Value, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0xC0); }
-            else if (Slot5.IsChecked == true)
-            { _memory.Write<int>(false, (int)p1id.Value, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x100); }
-            else if (Slot6.IsChecked == true)
-            { _memory.Write<int>(false, (int)p1id.Value, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x140); }
             #endregion
-        }
-        #endregion
 
-        #region |- Set Player 2 -|
-        //Player 2
-        private void SetP2GodMode(object sender, RoutedEventArgs e)
-        {
-            if (P2GodMode.IsChecked == true)
-            { _memory.Write<byte>(false, 0xA0, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.GodMode); }
-            else
-            { _memory.Write<byte>(false, 0x20, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.GodMode); }
-        }
-        private void SetP2Money(object sender, RoutedEventArgs e)
-        { _memory.Write<Int64>(false, (int)CashUpDown.Value, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.GodMode); }
-        private void FreezeP2Money(object sender, RoutedEventArgs e)
-        {
-            if (P2CashLock.IsChecked == true)
-            { _P2FreezeMoney = true; }
-            else
-            { _P2FreezeMoney = false; }
-        }
-        private void SetP2Ammo(object sender, RoutedEventArgs e)
-        {
-            if (P2Ammo.IsChecked == true)
-            { _P2SetAmmo = true; }
-            else
-            { _P2SetAmmo = false; }
-        }
-        private void SetP2NoTarget(object sender, RoutedEventArgs e)
-        {
-            if (P2NoTarget.IsChecked == true)
-            { _P2SetNoTarget = true; }
-            else
-            { _P2SetNoTarget = false; }
-        }
-        private void SetP2RapidFire(object sender, RoutedEventArgs e)
-        {
-            if (P2RapidFire.IsChecked == true)
-            { _P2SetRapidFire = true; }
-            else
-            { _P2SetRapidFire = false; }
-        }
-        private void SetP2RapidSkill(object sender, RoutedEventArgs e)
-        {
-            if (P2RapidFire.IsChecked == true)
-            { _P2SetRapidSkill = true; }
-            else
-            { _P2SetRapidSkill = false; _memory.Write(false, 0, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.RapidFieldUpgrade_Offset); }
-        }
-        private void SetP2Perks(object sender, RoutedEventArgs e)
-        {
-            if (P2RapidFire.IsChecked == true)
-            { _P2SetPerks = true; }
-            else
-            { _P2SetPerks = false; }
-        }
-        private void SetP2WeaponSlot(object sender, RoutedEventArgs e)
-        {
-            #region |- Set Weapon Slots -|
-            if (p2Slot1.IsChecked == true)
-            { _memory.Write<int>(false, (int)p2id.Value, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID); } // + 0x40 for each weapon
-            else if (p2Slot2.IsChecked == true)
-            { _memory.Write<int>(false, (int)p2id.Value, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x40); }
-            else if (p2Slot3.IsChecked == true)
-            { _memory.Write<int>(false, (int)p2id.Value, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x80); }
-            else if (p2Slot4.IsChecked == true)
-            { _memory.Write<int>(false, (int)p2id.Value, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0xC0); }
-            else if (p2Slot5.IsChecked == true)
-            { _memory.Write<int>(false, (int)p2id.Value, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x100); }
-            else if (p2Slot6.IsChecked == true)
-            { _memory.Write<int>(false, (int)p2id.Value, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x140); }
+            #region |- Player 2 Bool List -|
+
+            private bool _P2FreezeMoney;
+            private bool _P2SetAmmo;
+            private bool _P2SetNoTarget;
+            private bool _P2SetRapidFire;
+            private bool _P2SetRapidSkill;
+            private bool _P2SetPerks;
+
             #endregion
-        }
-        #endregion
 
-        #region |- Set Player 3 -|
-        //Player 3
-        private void SetP3GodMode(object sender, RoutedEventArgs e)
-        {
-            if (P3GodMode.IsChecked == true)
-            { _memory.Write<byte>(false, 0xA0, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.GodMode); }
-            else
-            { _memory.Write<byte>(false, 0x20, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.GodMode); }
-        }
-        private void SetP3Money(object sender, RoutedEventArgs e)
-        { _memory.Write<Int64>(false, (int)CashUpDown.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.GodMode); }
-        private void FreezeP3Money(object sender, RoutedEventArgs e)
-        {
-            if (P3CashLock.IsChecked == true)
-            { _P3FreezeMoney = true; }
-            else
-            { _P3FreezeMoney = false; }
-        }
-        private void SetP3Ammo(object sender, RoutedEventArgs e)
-        {
-            if (P3Ammo.IsChecked == true)
-            { _P3SetAmmo = true; }
-            else
-            { _P3SetAmmo = false; }
-        }
-        private void SetP3NoTarget(object sender, RoutedEventArgs e)
-        {
-            if (P3NoTarget.IsChecked == true)
-            { _P3SetNoTarget = true; }
-            else
-            { _P3SetNoTarget = false; }
-        }
-        private void SetP3RapidFire(object sender, RoutedEventArgs e)
-        {
-            if (P3RapidFire.IsChecked == true)
-            { _P3SetRapidFire = true; }
-            else
-            { _P3SetRapidFire = false; }
-        }
-        private void SetP3RapidSkill(object sender, RoutedEventArgs e)
-        {
-            if (P3RapidFire.IsChecked == true)
-            { _P3SetRapidSkill = true; }
-            else
-            { _P3SetRapidSkill = false; _memory.Write(false, 0, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.RapidFieldUpgrade_Offset); }
-        }
-        private void SetP3Perks(object sender, RoutedEventArgs e)
-        {
-            if (P3RapidFire.IsChecked == true)
-            { _P3SetPerks = true; }
-            else
-            { _P3SetPerks = false; }
-        }
-        private void SetP3WeaponSlot(object sender, RoutedEventArgs e)
-        {
-            #region |- Set Weapon Slots -|
-            if (p3Slot1.IsChecked == true)
-            { _memory.Write<int>(false, (int)p3id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID); } // + 0x40 for each weapon
-            else if (p3Slot2.IsChecked == true)
-            { _memory.Write<int>(false, (int)p3id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x40); }
-            else if (p3Slot3.IsChecked == true)
-            { _memory.Write<int>(false, (int)p3id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x80); }
-            else if (p3Slot4.IsChecked == true)
-            { _memory.Write<int>(false, (int)p3id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0xC0); }
-            else if (p3Slot5.IsChecked == true)
-            { _memory.Write<int>(false, (int)p3id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x100); }
-            else if (p3Slot6.IsChecked == true)
-            { _memory.Write<int>(false, (int)p3id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x140); }
+            #region |- Player 3 Bool List -|
+
+            private bool _P3FreezeMoney;
+            private bool _P3SetAmmo;
+            private bool _P3SetNoTarget;
+            private bool _P3SetRapidFire;
+            private bool _P3SetRapidSkill;
+            private bool _P3SetPerks;
+
             #endregion
-        }
-        #endregion
 
-        #region |- Set Player 4 -|
-        //Player 4
-        private void SetP4GodMode(object sender, RoutedEventArgs e)
-        {
-            if (P4GodMode.IsChecked == true)
-            { _memory.Write<byte>(false, 0xA0, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.GodMode); }
-            else
-            { _memory.Write<byte>(false, 0x20, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.GodMode); }
-        }
-        private void SetP4Money(object sender, RoutedEventArgs e)
-        { _memory.Write<Int64>(false, (int)CashUpDown.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.GodMode); }
-        private void FreezeP4Money(object sender, RoutedEventArgs e)
-        {
-            if (P4CashLock.IsChecked == true)
-            { _P4FreezeMoney = true; }
-            else
-            { _P4FreezeMoney = false; }
-        }
-        private void SetP4Ammo(object sender, RoutedEventArgs e)
-        {
-            if (P4Ammo.IsChecked == true)
-            { _P4SetAmmo = true; }
-            else
-            { _P4SetAmmo = false; }
-        }
-        private void SetP4NoTarget(object sender, RoutedEventArgs e)
-        {
-            if (P4NoTarget.IsChecked == true)
-            { _P4SetNoTarget = true; }
-            else
-            { _P4SetNoTarget = false; }
-        }
-        private void SetP4RapidFire(object sender, RoutedEventArgs e)
-        {
-            if (P4RapidFire.IsChecked == true)
-            { _P4SetRapidFire = true; }
-            else
-            { _P4SetRapidFire = false; }
-        }
-        private void SetP4RapidSkill(object sender, RoutedEventArgs e)
-        {
-            if (P4RapidFire.IsChecked == true)
-            { _P4SetRapidSkill = true; }
-            else
-            { _P4SetRapidSkill = false; _memory.Write(false, 0, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.RapidFieldUpgrade_Offset); }
-        }
-        private void SetP4Perks(object sender, RoutedEventArgs e)
-        {
-            if (P4RapidFire.IsChecked == true)
-            { _P4SetPerks = true; }
-            else
-            { _P4SetPerks = false; }
-        }
-        private void SetP4WeaponSlot(object sender, RoutedEventArgs e)
-        {
-            #region |- Set Weapon Slots -|
-            if (p4Slot1.IsChecked == true)
-            { _memory.Write<int>(false, (int)p4id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID); } // + 0x40 for each weapon
-            else if (p4Slot2.IsChecked == true)
-            { _memory.Write<int>(false, (int)p4id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x40); }
-            else if (p4Slot3.IsChecked == true)
-            { _memory.Write<int>(false, (int)p4id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x80); }
-            else if (p4Slot4.IsChecked == true)
-            { _memory.Write<int>(false, (int)p4id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0xC0); }
-            else if (p4Slot5.IsChecked == true)
-            { _memory.Write<int>(false, (int)p4id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x100); }
-            else if (p4Slot6.IsChecked == true)
-            { _memory.Write<int>(false, (int)p4id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x140); }
+            #region |- Player 4 Bool List -|
+
+            private bool _P4FreezeMoney;
+            private bool _P4SetAmmo;
+            private bool _P4SetNoTarget;
+            private bool _P4SetRapidFire;
+            private bool _P4SetRapidSkill;
+            private bool _P4SetPerks;
+
             #endregion
-        }
+
+            #region |- Zombies Bool List -|
+
+            private bool _LoopTeleZombiesCrosshair;     //Loop on crosshair
+            private bool _LoopTeleZombies;              //Loop on position
+            private bool _InstaKill;                    //
+            private bool _teleportZombiesLocation;      //
+        
+            #endregion
+
+            #region |- Player Teleport Bool List -|
+
+            //private bool _TelePlayer;
+
+            #endregion
+
+        //End Bool Lists
         #endregion
 
-        private void TeleportZombiesEnabled(object sender, RoutedEventArgs e)
-        {
-            //if (TeleportZombiePositionCheckBox.IsChecked.GetValueOrDefault())
-            //    TeleportZombiePositionCheckBox.IsChecked = false;
+        #region |- All Set Lists -|
 
-            _console.WriteLine("Teleport Zombies Too Crosshair Enabled", Brushes.Green);
-            _teleportZombies = true;
-        }
+            #region |- Set HOST Player 1 -|
+            //Player 1 HOST
+            private void SetP1GodMode(object sender, RoutedEventArgs e)
+            {
+                if (P1GodMode.IsChecked == true)
+                { _memory.Write<byte>(false, 0xA0, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.GodMode); }
+                else
+                { _memory.Write<byte>(false, 0x20, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.GodMode); }
+            }
+            private void SetP1Money(object sender, RoutedEventArgs e)
+            { _memory.Write<Int64>(false, (int)CashUpDown.Value, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.GodMode); }
+            private void FreezeP1Money(object sender, RoutedEventArgs e)
+            {
+                if (P1CashLock.IsChecked == true)
+                { _P1FreezeMoney = true; }
+                else
+                { _P1FreezeMoney = false; }
+            }
+            private void SetP1Ammo(object sender, RoutedEventArgs e)
+            {
+                if (P1Ammo.IsChecked == true)
+                { _P1SetAmmo = true; }
+                else
+                { _P1SetAmmo = false; }
+            }
+            private void SetP1NoTarget(object sender, RoutedEventArgs e)
+            {
+                if (P1NoTarget.IsChecked == true)
+                { _P1SetNoTarget = true; }
+                else
+                { _P1SetNoTarget = false; }
+            }
+            private void SetP1RapidFire(object sender, RoutedEventArgs e)
+            {
+                if (P1RapidFire.IsChecked == true)
+                { _P1SetRapidFire = true; }
+                else
+                { _P1SetRapidFire = false; }
+            }
+            private void SetP1RapidSkill(object sender, RoutedEventArgs e)
+            {
+                if (P1RapidFire.IsChecked == true)
+                { _P1SetRapidSkill = true; }
+                else
+                { _P1SetRapidSkill = false; _memory.Write(false, 0, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.RapidFieldUpgrade_Offset); }
+            }
+            private void SetP1Perks(object sender, RoutedEventArgs e)
+            {
+                if (P1RapidFire.IsChecked == true)
+                { _P1SetPerks = true; }
+                else
+                { _P1SetPerks = false; }
+            }
+            private void SetP1WeaponSlot(object sender, RoutedEventArgs e)
+            {
+                #region |- Set Weapon Slots -|
+                if (Slot1.IsChecked == true)
+                { _memory.Write<int>(false, (int)p1id.Value, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID); } // + 0x40 for each weapon
+                else if (Slot2.IsChecked == true)
+                { _memory.Write<int>(false, (int)p1id.Value, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x40); }
+                else if (Slot3.IsChecked == true)
+                { _memory.Write<int>(false, (int)p1id.Value, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x80); }
+                else if (Slot4.IsChecked == true)
+                { _memory.Write<int>(false, (int)p1id.Value, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0xC0); }
+                else if (Slot5.IsChecked == true)
+                { _memory.Write<int>(false, (int)p1id.Value, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x100); }
+                else if (Slot6.IsChecked == true)
+                { _memory.Write<int>(false, (int)p1id.Value, _baseAddress + Offsets.PlayerBase, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x140); }
+                #endregion
+            }
+        #endregion
+
+            #region |- Set Player 2 -|
+            //Player 2
+            private void SetP2GodMode(object sender, RoutedEventArgs e)
+            {
+                if (P2GodMode.IsChecked == true)
+                { _memory.Write<byte>(false, 0xA0, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.GodMode); }
+                else
+                { _memory.Write<byte>(false, 0x20, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.GodMode); }
+            }
+            private void SetP2Money(object sender, RoutedEventArgs e)
+            { _memory.Write<Int64>(false, (int)CashUpDown.Value, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.GodMode); }
+            private void FreezeP2Money(object sender, RoutedEventArgs e)
+            {
+                if (P2CashLock.IsChecked == true)
+                { _P2FreezeMoney = true; }
+                else
+                { _P2FreezeMoney = false; }
+            }
+            private void SetP2Ammo(object sender, RoutedEventArgs e)
+            {
+                if (P2Ammo.IsChecked == true)
+                { _P2SetAmmo = true; }
+                else
+                { _P2SetAmmo = false; }
+            }
+            private void SetP2NoTarget(object sender, RoutedEventArgs e)
+            {
+                if (P2NoTarget.IsChecked == true)
+                { _P2SetNoTarget = true; }
+                else
+                { _P2SetNoTarget = false; }
+            }
+            private void SetP2RapidFire(object sender, RoutedEventArgs e)
+            {
+                if (P2RapidFire.IsChecked == true)
+                { _P2SetRapidFire = true; }
+                else
+                { _P2SetRapidFire = false; }
+            }
+            private void SetP2RapidSkill(object sender, RoutedEventArgs e)
+            {
+                if (P2RapidFire.IsChecked == true)
+                { _P2SetRapidSkill = true; }
+                else
+                { _P2SetRapidSkill = false; _memory.Write(false, 0, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.RapidFieldUpgrade_Offset); }
+            }
+            private void SetP2Perks(object sender, RoutedEventArgs e)
+            {
+                if (P2RapidFire.IsChecked == true)
+                { _P2SetPerks = true; }
+                else
+                { _P2SetPerks = false; }
+            }
+            private void SetP2WeaponSlot(object sender, RoutedEventArgs e)
+            {
+                #region |- Set Weapon Slots -|
+                if (p2Slot1.IsChecked == true)
+                { _memory.Write<int>(false, (int)p2id.Value, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID); } // + 0x40 for each weapon
+                else if (p2Slot2.IsChecked == true)
+                { _memory.Write<int>(false, (int)p2id.Value, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x40); }
+                else if (p2Slot3.IsChecked == true)
+                { _memory.Write<int>(false, (int)p2id.Value, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x80); }
+                else if (p2Slot4.IsChecked == true)
+                { _memory.Write<int>(false, (int)p2id.Value, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0xC0); }
+                else if (p2Slot5.IsChecked == true)
+                { _memory.Write<int>(false, (int)p2id.Value, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x100); }
+                else if (p2Slot6.IsChecked == true)
+                { _memory.Write<int>(false, (int)p2id.Value, _baseAddress + Offsets.PlayerBase + Offsets.PlayerCompPtr.ArraySizeOffset, (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x140); }
+                #endregion
+            }
+        #endregion
+
+            #region |- Set Player 3 -|
+            //Player 3
+            private void SetP3GodMode(object sender, RoutedEventArgs e)
+            {
+                if (P3GodMode.IsChecked == true)
+                { _memory.Write<byte>(false, 0xA0, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.GodMode); }
+                else
+                { _memory.Write<byte>(false, 0x20, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.GodMode); }
+            }
+            private void SetP3Money(object sender, RoutedEventArgs e)
+            { _memory.Write<Int64>(false, (int)CashUpDown.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.GodMode); }
+            private void FreezeP3Money(object sender, RoutedEventArgs e)
+            {
+                if (P3CashLock.IsChecked == true)
+                { _P3FreezeMoney = true; }
+                else
+                { _P3FreezeMoney = false; }
+            }
+            private void SetP3Ammo(object sender, RoutedEventArgs e)
+            {
+                if (P3Ammo.IsChecked == true)
+                { _P3SetAmmo = true; }
+                else
+                { _P3SetAmmo = false; }
+            }
+            private void SetP3NoTarget(object sender, RoutedEventArgs e)
+            {
+                if (P3NoTarget.IsChecked == true)
+                { _P3SetNoTarget = true; }
+                else
+                { _P3SetNoTarget = false; }
+            }
+            private void SetP3RapidFire(object sender, RoutedEventArgs e)
+            {
+                if (P3RapidFire.IsChecked == true)
+                { _P3SetRapidFire = true; }
+                else
+                { _P3SetRapidFire = false; }
+            }
+            private void SetP3RapidSkill(object sender, RoutedEventArgs e)
+            {
+                if (P3RapidFire.IsChecked == true)
+                { _P3SetRapidSkill = true; }
+                else
+                { _P3SetRapidSkill = false; _memory.Write(false, 0, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.RapidFieldUpgrade_Offset); }
+            }
+            private void SetP3Perks(object sender, RoutedEventArgs e)
+            {
+                if (P3RapidFire.IsChecked == true)
+                { _P3SetPerks = true; }
+                else
+                { _P3SetPerks = false; }
+            }
+            private void SetP3WeaponSlot(object sender, RoutedEventArgs e)
+            {
+                #region |- Set Weapon Slots -|
+                if (p3Slot1.IsChecked == true)
+                { _memory.Write<int>(false, (int)p3id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID); } // + 0x40 for each weapon
+                else if (p3Slot2.IsChecked == true)
+                { _memory.Write<int>(false, (int)p3id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x40); }
+                else if (p3Slot3.IsChecked == true)
+                { _memory.Write<int>(false, (int)p3id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x80); }
+                else if (p3Slot4.IsChecked == true)
+                { _memory.Write<int>(false, (int)p3id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0xC0); }
+                else if (p3Slot5.IsChecked == true)
+                { _memory.Write<int>(false, (int)p3id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x100); }
+                else if (p3Slot6.IsChecked == true)
+                { _memory.Write<int>(false, (int)p3id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 2), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x140); }
+                #endregion
+            }
+        #endregion
+
+            #region |- Set Player 4 -|
+            //Player 4
+            private void SetP4GodMode(object sender, RoutedEventArgs e)
+            {
+                if (P4GodMode.IsChecked == true)
+                { _memory.Write<byte>(false, 0xA0, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.GodMode); }
+                else
+                { _memory.Write<byte>(false, 0x20, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.GodMode); }
+            }
+            private void SetP4Money(object sender, RoutedEventArgs e)
+            { _memory.Write<Int64>(false, (int)CashUpDown.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.GodMode); }
+            private void FreezeP4Money(object sender, RoutedEventArgs e)
+            {
+                if (P4CashLock.IsChecked == true)
+                { _P4FreezeMoney = true; }
+                else
+                { _P4FreezeMoney = false; }
+            }
+            private void SetP4Ammo(object sender, RoutedEventArgs e)
+            {
+                if (P4Ammo.IsChecked == true)
+                { _P4SetAmmo = true; }
+                else
+                { _P4SetAmmo = false; }
+            }
+            private void SetP4NoTarget(object sender, RoutedEventArgs e)
+            {
+                if (P4NoTarget.IsChecked == true)
+                { _P4SetNoTarget = true; }
+                else
+                { _P4SetNoTarget = false; }
+            }
+            private void SetP4RapidFire(object sender, RoutedEventArgs e)
+            {
+                if (P4RapidFire.IsChecked == true)
+                { _P4SetRapidFire = true; }
+                else
+                { _P4SetRapidFire = false; }
+            }
+            private void SetP4RapidSkill(object sender, RoutedEventArgs e)
+            {
+                if (P4RapidFire.IsChecked == true)
+                { _P4SetRapidSkill = true; }
+                else
+                { _P4SetRapidSkill = false; _memory.Write(false, 0, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.RapidFieldUpgrade_Offset); }
+            }
+            private void SetP4Perks(object sender, RoutedEventArgs e)
+            {
+                if (P4RapidFire.IsChecked == true)
+                { _P4SetPerks = true; }
+                else
+                { _P4SetPerks = false; }
+            }
+            private void SetP4WeaponSlot(object sender, RoutedEventArgs e)
+            {
+                #region |- Set Weapon Slots -|
+                if (p4Slot1.IsChecked == true)
+                { _memory.Write<int>(false, (int)p4id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID); } // + 0x40 for each weapon
+                else if (p4Slot2.IsChecked == true)
+                { _memory.Write<int>(false, (int)p4id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x40); }
+                else if (p4Slot3.IsChecked == true)
+                { _memory.Write<int>(false, (int)p4id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x80); }
+                else if (p4Slot4.IsChecked == true)
+                { _memory.Write<int>(false, (int)p4id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0xC0); }
+                else if (p4Slot5.IsChecked == true)
+                { _memory.Write<int>(false, (int)p4id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x100); }
+                else if (p4Slot6.IsChecked == true)
+                { _memory.Write<int>(false, (int)p4id.Value, _baseAddress + Offsets.PlayerBase + (Offsets.PlayerCompPtr.ArraySizeOffset * 3), (IntPtr)Offsets.PlayerCompPtr.SetWeaponID + 0x140); }
+                #endregion
+            }
+        #endregion
+
+            #region |- Set Zombies -|
+            //Zombie Teleports
+            private void SetCrossTeleZombies(object sender, RoutedEventArgs e)
+            {
+                if (/* Crosshair Checkbox*/ == true)
+                    _console.WriteLine("Loop Teleporting Zombies on Crosshair", Brushes.Green);
+                    _LoopTeleZombiesCrosshair = true;
+                else
+                    _console.WriteLine("Teleporting Zombies on Crosshair Once", Brushes.Green);
+                    TeleportZombies(true, 150); //Sends zombies to crosshairs
+            }
+
+            private void SetTeleZombies(object sender, RoutedEventArgs e)
+            {
+                if (/* Crosshair Checkbox*/ == true)
+                    _console.WriteLine("Loop Teleporting Zombies", Brushes.Green);
+                    _LoopTeleZombies = true;
+                else
+                    _console.WriteLine("Teleporting Zombies Once", Brushes.Green);
+                    /* Do Zombie Teleport 1 time */
+            }
+
+                #region |- Functions -|
+
+                private IntPtr _playerPedPtr;
+                private IntPtr _zmBotListBase;
+                private IntPtr _zmGlobalBase;
+
+                private Vector3 _playerPosition;
+
+                public ZombieHack(IntPtr playerPedPtr, IntPtr zmBotListBase, IntPtr zmGlobalBase, NativeMemory memory)
+                {
+                    _playerPedPtr = playerPedPtr;
+                    _zmBotListBase = zmBotListBase;
+                    _zmGlobalBase = zmGlobalBase;
+                    _memory = memory;
+                }
+
+                public void OneHpZombies()
+                {
+                    for (int i = 0; i < 120; i++)
+                    {
+                        _memory.Write(false, 1, (_zmBotListBase + (Offsets.ZombieBotListBase.BotArraySizeOffset * i) + Offsets.ZombieBotListBase.BotHealth));
+                        _memory.Write(false, 1, (_zmBotListBase + (Offsets.ZombieBotListBase.BotArraySizeOffset * i) + Offsets.ZombieBotListBase.BotMaxHealth));
+                    }
+                }
+
+                public void TeleportZombies(bool TeleportCrosshair, int distance = 150)
+                {
+                    //this is the position we teleport the zombie too.
+                    //we could just set newEnemyPosition too another vector3 and they would teleport too that.
+                    Vector3 newEnemyPosition = TeleportCrosshair ? NewEnemyPosition(distance) : _playerPosition;
+
+                    byte[] enemyPosBuffer = new byte[12];
+
+                    Buffer.BlockCopy(BitConverter.GetBytes(newEnemyPosition.X), 0, enemyPosBuffer, 0, 4);
+                    Buffer.BlockCopy(BitConverter.GetBytes(newEnemyPosition.Y), 0, enemyPosBuffer, 4, 4);
+                    Buffer.BlockCopy(BitConverter.GetBytes(newEnemyPosition.Z), 0, enemyPosBuffer, 8, 4);
+
+                    for (int i = 0; i < 120; i++)
+                        _memory.WriteBytes(_zmBotListBase + (Offsets.ZombieBotListBase.BotArraySizeOffset * i) + Offsets.ZombieBotListBase.Coords, enemyPosBuffer);
+                }
+
+                private Vector3 NewEnemyPosition(int distance)
+                {
+                    Vector3 enemyPosition;
+                    Vector3 playerPosition = GetPlayerPosition();
+
+                    byte[] playerHeadingXY = _memory.ReadBytes(_playerPedPtr + Offsets.PlayerPedPtr.HeadingXY, 4);
+                    byte[] playerHeadingZ = _memory.ReadBytes(_playerPedPtr + Offsets.PlayerPedPtr.HeadingZ, 4);
+
+                    double pitch = -MathUtils.ConvertToRadians(BitConverter.ToSingle(playerHeadingZ, 0));
+                    double yaw = MathUtils.ConvertToRadians(BitConverter.ToSingle(playerHeadingXY, 0));
+
+                    enemyPosition.X = Convert.ToSingle(Math.Cos(yaw) * Math.Cos(pitch));
+                    enemyPosition.Y = Convert.ToSingle(Math.Sin(yaw) * Math.Cos(pitch));
+                    enemyPosition.Z = Convert.ToSingle(Math.Sin(pitch));
+
+                    return playerPosition + (enemyPosition * distance);
+                }
+
+                private Vector3 GetPlayerPosition()
+                {
+                    byte[] playerCoords = _memory.ReadBytes(_playerPedPtr + Offsets.PlayerPedPtr.Coords, 12);
+                    Vector3 playerPosition;
+
+                    playerPosition.X = BitConverter.ToSingle(playerCoords, 0);
+                    playerPosition.Y = BitConverter.ToSingle(playerCoords, 4);
+                    playerPosition.Z = BitConverter.ToSingle(playerCoords, 8);
+
+                    return new Vector3((float)Math.Round(playerPosition.X, 4), (float)Math.Round(playerPosition.Y, 4), (float)Math.Round(playerPosition.Z, 4));
+                }
+
+                public Vector3 SetPosition()
+                {
+                    _playerPosition = GetPlayerPosition();
+                    return _playerPosition;
+                }
+
+                #endregion
+
+            #endregion
+
+        #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         private void TeleportZombiesDisable(object sender, RoutedEventArgs e)
         {
